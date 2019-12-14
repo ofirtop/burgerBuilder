@@ -1,0 +1,10 @@
+.Hamburger{
+    height:100%;    
+    display:flex;
+    align-items: center;
+}
+
+.Hamburger img{
+    height:80%;
+    border-radius: 5px;    
+}
