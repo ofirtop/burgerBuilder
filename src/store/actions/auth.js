@@ -1,5 +1,6 @@
 import * as actionTypes from "./actionsTypes";
 import axios from "axios";
+import * as keys from '../../passwords';
 
 export const authStart = () => {
   return {
@@ -51,11 +52,14 @@ export const auth = (email, password, isSignup) => {
     dispatch(authStart());
     /* async authentication code goes here... */
     const authData = { email, password, returnSecureToken: true };
+    
     let url =
-      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCMuVYW8-lP8gEpWrRrGuNaTOreRXbi4qA";
+      // "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCMuVYW8-lP8gEpWrRrGuNaTOreRXbi4qA";
+      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + keys.AUTH_KEY;
     if (!isSignup) {
       url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCMuVYW8-lP8gEpWrRrGuNaTOreRXbi4qA";
+        // "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCMuVYW8-lP8gEpWrRrGuNaTOreRXbi4qA";
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + keys.AUTH_KEY;
     }
     axios
       .post(url, authData)
