@@ -53,12 +53,10 @@ export const auth = (email, password, isSignup) => {
     /* async authentication code goes here... */
     const authData = { email, password, returnSecureToken: true };
     
-    let url =
-      // "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCMuVYW8-lP8gEpWrRrGuNaTOreRXbi4qA";
+    let url =      
       "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + keys.AUTH_KEY;
     if (!isSignup) {
-      url =
-        // "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCMuVYW8-lP8gEpWrRrGuNaTOreRXbi4qA";
+      url =        
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + keys.AUTH_KEY;
     }
     axios
