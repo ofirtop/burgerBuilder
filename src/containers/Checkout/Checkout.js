@@ -13,6 +13,7 @@ class Checkout extends Component {
     this.props.history.replace("/checkout/contact-data");
   };
   render() {
+    console.log('INSIDE CHEKCOUT - PROPS: ',this.props)
     let summaryToShow = <Redirect to="/" />;
     if (this.props.ingredients) {
 

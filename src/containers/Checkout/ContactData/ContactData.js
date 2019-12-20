@@ -7,7 +7,8 @@ import Input from "../../../components/UI/Input/Input";
 import {connect} from 'react-redux'
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import * as actionCreators from '../../../store/actions/index';
-
+// import { updateObject } from '../../../shared/utility';
+import {checkValidity} from '../../../shared/validation';
 
 class ContactData extends Component {
   state = {
@@ -119,36 +120,11 @@ class ContactData extends Component {
   }
 
 
-  checkValidity(value, rule,updatedElement) {
-    let isValid = true;
-
-    if (rule.required) {
-      isValid = value.trim() !== "" && isValid;
-      updatedElement.errorMessage = 'Please enter ' + updatedElement.elementConfig.placeholder;
-    }
-
-    if (rule.minLength) {
-      isValid = value.length >= rule.minLength && isValid;
-      updatedElement.errorMessage = updatedElement.elementConfig.placeholder + ' should be at list ' + rule.minLength + ' letters long';
-    }
-    if (rule.maxLength) {
-      isValid = value.length <= rule.maxLength && isValid;
-      updatedElement.errorMessage = updatedElement.elementConfig.placeholder + ' should be not more then ' + rule.maxLength + ' letters long';
-    }
-
-    if (rule.isEmail) {
-        const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-        isValid = pattern.test(value) && isValid
-    }
-
-    return isValid;
-  }
-
   inputChangedHandler = ev => {
     const updatedOrderForm = JSON.parse(JSON.stringify(this.state.orderForm));
     updatedOrderForm[ev.target.name].value = ev.target.value;
     
-    updatedOrderForm[ev.target.name].valid = this.checkValidity(
+    updatedOrderForm[ev.target.name].valid = checkValidity(
       ev.target.value,
       updatedOrderForm[ev.target.name].validation,
       updatedOrderForm[ev.target.name]
@@ -159,7 +135,7 @@ class ContactData extends Component {
     //setting the General validation of the form (formIsValid)
     let formIsValid = true;
     for(let key in updatedOrderForm){
-      // console.log(key + ': ' + updatedOrderForm[key].valid)
+      
       formIsValid = updatedOrderForm[key].valid && formIsValid
     }
 
@@ -193,7 +169,7 @@ class ContactData extends Component {
 
     let form = <Spinner />;
     if (!this.props.loading) {
-      // console.log('this.state.orderForm.formIsValid: ',this.state.formIsValid)
+      
       form = (
         <form onSubmit={this.orderHandler}>
           {elementsToShow}

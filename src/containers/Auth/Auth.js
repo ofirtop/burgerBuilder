@@ -7,6 +7,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import classes from "./Auth.module.css";
 import * as actions from "../../store/actions/index";
 import {Redirect} from 'react-router-dom'
+import {checkValidity} from '../../shared/validation';
 
 class Auth extends Component {
   state = {
@@ -58,7 +59,7 @@ class Auth extends Component {
     const updatedAuthForm = JSON.parse(JSON.stringify(this.state.authForm));
     updatedAuthForm[ev.target.name].value = ev.target.value;
 
-    updatedAuthForm[ev.target.name].valid = this.checkValidity(
+    updatedAuthForm[ev.target.name].valid = checkValidity(
       ev.target.value,
       updatedAuthForm[ev.target.name].validation,
       updatedAuthForm[ev.target.name]
@@ -69,51 +70,14 @@ class Auth extends Component {
     //setting the General validation of the form (formIsValid)
     // let formIsValid = true;
     // for(let key in updatedAuthForm){
-    //   // console.log(key + ': ' + updatedOrderForm[key].valid)
+    
     //   formIsValid = updatedAuthForm[key].valid && formIsValid
     // }
 
     this.setState({ authForm: updatedAuthForm /*,formIsValid*/ });
   };
 
-  checkValidity(value, rule, updatedElement) {
-    let isValid = true;
-
-    if (rule.required) {
-      isValid = value.trim() !== "" && isValid;
-      updatedElement.errorMessage =
-        "Please enter " + updatedElement.elementConfig.placeholder;
-    }
-
-    if (rule.minLength) {
-      isValid = value.length >= rule.minLength && isValid;
-      updatedElement.errorMessage =
-        updatedElement.elementConfig.placeholder +
-        " should be at list " +
-        rule.minLength +
-        " letters long";
-    }
-    if (rule.maxLength) {
-      isValid = value.length <= rule.maxLength && isValid;
-      updatedElement.errorMessage =
-        updatedElement.elementConfig.placeholder +
-        " should be not more then " +
-        rule.maxLength +
-        " letters long";
-    }
-
-    if (rule.isEmail) {
-      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-      isValid = pattern.test(value) && isValid;
-    }
-
-    if (rule.isNumeric) {
-      const pattern = /^\d+$/;
-      isValid = pattern.test(value) && isValid;
-    }
-
-    return isValid;
-  }
+  
 
   submitHandler = (ev) => {
     ev.preventDefault();

@@ -10,7 +10,7 @@ import axios from '../../axios';
 import {connect} from 'react-redux';
 import * as actionCreators from '../../store/actions/index';
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
   constructor(props) {
     super(props);
     this.state = {

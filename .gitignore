@@ -5,7 +5,7 @@
 /.pnp
 .pnp.js
 passwords.js
-
+bfg.jar
 # testing
 /coverage
 
